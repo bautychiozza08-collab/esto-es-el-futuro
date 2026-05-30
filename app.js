@@ -105,3 +105,163 @@ if(stages.length){
     stages[2]?.classList.add("active");
   }, 4700);
 }
+// =========================
+// FUTURE ASSISTANT CART
+// =========================
+
+let futureCart = JSON.parse(localStorage.getItem("futureCart")) || [];
+
+function saveFutureCart(){
+  localStorage.setItem("futureCart", JSON.stringify(futureCart));
+}
+
+function formatFutureMoney(value){
+  return "$" + value.toLocaleString("es-AR");
+}
+
+function renderFutureCart(){
+  const itemsBox = document.getElementById("assistantItems");
+  const totalBox = document.getElementById("assistantTotal");
+
+  if(!itemsBox || !totalBox) return;
+
+  itemsBox.innerHTML = "";
+
+  if(futureCart.length === 0){
+    itemsBox.innerHTML = `<p class="empty-cart">Tocá productos para sumarlos.</p>`;
+  }
+
+  let total = 0;
+
+  futureCart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    const div = document.createElement("div");
+    div.className = "future-cart-item";
+
+    div.innerHTML = `
+      <div>
+        <h4>${item.name}</h4>
+        <small>${item.qty} x ${formatFutureMoney(item.price)}</small>
+      </div>
+
+      <div class="future-cart-controls">
+        <button onclick="updateFutureCartQty(${index}, -1)">-</button>
+        <span>${item.qty}</span>
+        <button onclick="updateFutureCartQty(${index}, 1)">+</button>
+        <button class="delete" onclick="deleteFutureCartItem(${index})">×</button>
+      </div>
+    `;
+
+    itemsBox.appendChild(div);
+  });
+
+  totalBox.textContent = formatFutureMoney(total);
+}
+
+function addToFutureCart(name, price){
+  const existing = futureCart.find(item => item.name === name);
+
+  if(existing){
+    existing.qty++;
+  }else{
+    futureCart.push({ name, price, qty:1 });
+  }
+
+  saveFutureCart();
+  renderFutureCart();
+
+  document.getElementById("assistantPanel")?.classList.add("active");
+}
+
+function updateFutureCartQty(index, amount){
+  futureCart[index].qty += amount;
+
+  if(futureCart[index].qty <= 0){
+    futureCart.splice(index,1);
+  }
+
+  saveFutureCart();
+  renderFutureCart();
+}
+
+function deleteFutureCartItem(index){
+  futureCart.splice(index,1);
+  saveFutureCart();
+  renderFutureCart();
+}
+
+function resetFutureCart(){
+  futureCart = [];
+  saveFutureCart();
+  renderFutureCart();
+}
+
+function buildFutureOrder(){
+  if(futureCart.length === 0){
+    alert("Todavía no agregaste productos.");
+    return;
+  }
+
+  let total = 0;
+
+  let message = "Hola Club Serrano 👋%0A%0A";
+  message += "Quiero consultar por esta selección:%0A%0A";
+
+  futureCart.forEach(item => {
+    const subtotal = item.price * item.qty;
+    total += subtotal;
+
+    message += `• ${item.qty} x ${item.name} - ${formatFutureMoney(subtotal)}%0A`;
+  });
+
+  message += "%0A";
+  message += `Total estimado: ${formatFutureMoney(total)}%0A%0A`;
+  message += "¿Me ayudan a confirmar disponibilidad o reservar?";
+
+  window.open(
+    `https://wa.me/5491130921900?text=${message}`,
+    "_blank"
+  );
+}
+
+document.addEventListener("click", (e) => {
+  const item = e.target.closest(".menu-item");
+
+  if(!item) return;
+
+  const name = item.querySelector("span")?.textContent.trim();
+  const priceText = item.querySelector("strong")?.textContent || "0";
+  const price = Number(priceText.replace(/\D/g, ""));
+
+  if(!name || !price) return;
+
+  addToFutureCart(name, price);
+
+  item.classList.add("added");
+
+  setTimeout(() => {
+    item.classList.remove("added");
+  }, 500);
+});
+
+window.addEventListener("load", () => {
+  const toggle = document.getElementById("assistantToggle");
+  const panel = document.getElementById("assistantPanel");
+  const close = document.getElementById("assistantClose");
+  const reset = document.getElementById("assistantReset");
+  const order = document.getElementById("assistantOrder");
+
+  toggle?.addEventListener("click", () => {
+    panel?.classList.toggle("active");
+  });
+
+  close?.addEventListener("click", () => {
+    panel?.classList.remove("active");
+  });
+
+  reset?.addEventListener("click", resetFutureCart);
+  order?.addEventListener("click", buildFutureOrder);
+
+  renderFutureCart();
+});
