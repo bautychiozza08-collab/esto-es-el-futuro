@@ -1840,3 +1840,221 @@ body{
     max-height:65vh;
   }
 }
+/* =========================
+   PROMOCIONES
+========================= */
+
+.promo-universe{
+    min-height:100vh;
+
+    padding:140px 8% 80px;
+
+    text-align:center;
+}
+
+.promo-universe h1{
+    margin-top:25px;
+
+    font-family:'Bebas Neue';
+
+    font-size:clamp(5rem,12vw,10rem);
+
+    line-height:.9;
+
+    background:
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #7dd3fc,
+      #ff9f43
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.promo-grid{
+    margin-top:70px;
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:30px;
+}
+
+.promo-card{
+    padding:40px;
+
+    border-radius:30px;
+
+    background:
+    linear-gradient(
+      145deg,
+      rgba(0,207,255,.08),
+      rgba(255,123,0,.06)
+    );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    transition:.4s;
+}
+
+.promo-card:hover{
+    transform:translateY(-10px);
+
+    box-shadow:
+    0 0 40px rgba(255,123,0,.2),
+    0 0 60px rgba(0,207,255,.15);
+}
+
+.featured-promo{
+    border:2px solid rgba(255,123,0,.5);
+
+    box-shadow:
+    0 0 60px rgba(255,123,0,.25);
+}
+
+.promo-card span{
+    color:#67e8f9;
+
+    letter-spacing:3px;
+
+    font-weight:900;
+}
+
+.promo-card h2{
+    margin:20px 0;
+
+    font-size:2.5rem;
+}
+
+.promo-card p{
+    color:#dbeafe;
+}
+
+@media(max-width:900px){
+
+    .promo-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+/* =========================
+   PROMOCIONES
+========================= */
+
+.promo-universe{
+  min-height:100vh;
+  padding:140px 8% 90px;
+  text-align:center;
+}
+
+.promo-universe h1{
+  margin-top:28px;
+  font-family:"Bebas Neue",sans-serif;
+  font-size:clamp(5rem,12vw,10rem);
+  line-height:.85;
+  background:linear-gradient(180deg,#fff,#7dd3fc,#ff9f43);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.promo-main{
+  max-width:900px;
+  margin:70px auto 40px;
+  padding:55px;
+  border-radius:40px;
+  background:
+    radial-gradient(circle at top right, rgba(255,123,0,.22), transparent 35%),
+    linear-gradient(145deg, rgba(0,207,255,.08), rgba(255,123,0,.06));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 0 60px rgba(255,123,0,.18),
+    0 40px 130px rgba(0,0,0,.45);
+}
+
+.promo-main > span,
+.promo-card span{
+  color:#67e8f9;
+  letter-spacing:4px;
+  font-weight:900;
+  font-size:.8rem;
+}
+
+.promo-main h2{
+  margin-top:20px;
+  font-size:clamp(3.5rem,8vw,7rem);
+}
+
+.promo-main p{
+  color:#dbeafe;
+  margin-top:15px;
+}
+
+.countdown{
+  margin:38px auto 30px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+}
+
+.countdown div{
+  width:130px;
+  padding:22px;
+  border-radius:22px;
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.countdown strong{
+  display:block;
+  font-size:3rem;
+  color:#ff9f43;
+}
+
+.countdown small{
+  color:#dbeafe;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.promo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:26px;
+  max-width:900px;
+  margin:auto;
+}
+
+.promo-card{
+  padding:36px;
+  border-radius:30px;
+  background:linear-gradient(145deg, rgba(0,207,255,.08), rgba(255,123,0,.05));
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.promo-card h2{
+  margin:16px 0;
+  font-size:2.4rem;
+}
+
+.promo-card p{
+  color:#dbeafe;
+}
+
+@media(max-width:700px){
+  .countdown{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .promo-grid{
+    grid-template-columns:1fr;
+  }
+
+  .promo-main{
+    padding:35px 24px;
+  }
+}

@@ -265,3 +265,39 @@ window.addEventListener("load", () => {
 
   renderFutureCart();
 });
+// =========================
+// PROMO COUNTDOWN
+// =========================
+
+function updatePromoCountdown(){
+  const h = document.getElementById("hours");
+  const m = document.getElementById("minutes");
+  const s = document.getElementById("seconds");
+
+  if(!h || !m || !s) return;
+
+  const now = new Date();
+  const end = new Date();
+
+  end.setHours(23, 59, 59, 999);
+
+  const diff = end - now;
+
+  if(diff <= 0){
+    h.textContent = "00";
+    m.textContent = "00";
+    s.textContent = "00";
+    return;
+  }
+
+  const hours = Math.floor(diff / 1000 / 60 / 60);
+  const minutes = Math.floor((diff / 1000 / 60) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  h.textContent = String(hours).padStart(2,"0");
+  m.textContent = String(minutes).padStart(2,"0");
+  s.textContent = String(seconds).padStart(2,"0");
+}
+
+setInterval(updatePromoCountdown,1000);
+updatePromoCountdown();
